@@ -14,6 +14,17 @@ Here is a sample of a diffusion sequence on MNIST:
   <img src="resources/diffusion_sequence_mnist.gif" />
 </p>
 
+### How to run
+
+- Training:
+```bash
+python scripts/train_cifar.py
+```
+
+- Testing:
+```bash
+python scripts/sample_images.py
+```
 
 ## Resources
 
