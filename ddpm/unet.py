@@ -23,7 +23,7 @@ class PositionalEmbedding(nn.Module):
     __doc__ = r"""Computes a positional embedding of timesteps.
 
     Input:
-        x: tensor of shape (N)
+        x: tensor of shape (N)
     Output:
         tensor of shape (N, dim)
     Args:
@@ -142,9 +142,9 @@ class ResidualBlock(nn.Module):
     __doc__ = r"""Applies two conv blocks with resudual connection. Adds time and class conditioning by adding bias after first convolution.
 
     Input:
-        x: tensor of shape (N, in_channels, H, W)
-        time_emb: time embedding tensor of shape (N, time_emb_dim) or None if the block doesn't use time conditioning
-        y: classes tensor of shape (N) or None if the block doesn't use class conditioning
+        x: tensor of shape (N, in_channels, H, W)
+        time_emb: time embedding tensor of shape (N, time_emb_dim) or None if the block doesn't use time conditioning
+        y: classes tensor of shape (N) or None if the block doesn't use class conditioning
     Output:
         tensor of shape (N, out_channels, H, W)
     Args:
@@ -215,9 +215,9 @@ class UNet(nn.Module):
     __doc__ = """UNet model used to estimate noise.
 
     Input:
-        x: tensor of shape (N, in_channels, H, W)
-        time_emb: time embedding tensor of shape (N, time_emb_dim) or None if the block doesn't use time conditioning
-        y: classes tensor of shape (N) or None if the block doesn't use class conditioning
+        x: tensor of shape (N, in_channels, H, W)
+        time_emb: time embedding tensor of shape (N, time_emb_dim) or None if the block doesn't use time conditioning
+        y: classes tensor of shape (N) or None if the block doesn't use class conditioning
     Output:
         tensor of shape (N, out_channels, H, W)
     Args:

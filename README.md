@@ -26,6 +26,50 @@ python scripts/train_cifar.py
 python scripts/sample_images.py
 ```
 
+### Yuzhi's local computer example
+
+- Environment:
+
+1) pytorch 1.11.0, cudatoolkit 10.2
+
+2) torchvision 0.12.0
+
+3) wandb
+
+- Preparation:
+
+1) register an account on [wandb](https://wandb.ai/site)
+
+2) login with that account
+
+3) record the personal private API key, e.g., `44c0a5e96a4bae0dde739559a4e0e7035890ebb3` for my account `zhaoyuzhi987@gmail.com`
+
+4) open a terminal on the local machine:
+```bash
+pip install wandb
+wandb login (insert that API key)
+```
+
+5) create a new project, record the `project name`, e.g., `DDPM`
+
+- Training:
+
+1) insert the `project name` at line 150, e.g., `project_name="DDPM"`
+
+2) comment the `entity` if the wandb account is private
+
+3) change the log destination at line 142, e.g., `log_dir="./ddpm_logs"`:
+```bash
+mkdir ddpm_logs
+```
+
+4) run the example file:
+```bash
+python train_cifar.py
+```
+
+5) the training process uses approximately 9000Mb GPU memory, and the trained models will be automatically saved in `ddpm_logs` folder
+
 ## Resources
 
 I gave a talk about diffusion models, NCSNs, and their applications in audio generation. The [slides are available here](resources/diffusion_models_talk_slides.pdf).

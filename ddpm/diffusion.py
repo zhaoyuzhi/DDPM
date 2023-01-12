@@ -13,14 +13,14 @@ class GaussianDiffusion(nn.Module):
     __doc__ = r"""Gaussian Diffusion model. Forwarding through the module returns diffusion reversal scalar loss tensor.
 
     Input:
-        x: tensor of shape (N, img_channels, *img_size)
-        y: tensor of shape (N)
+        x: tensor of shape (N, img_channels, *img_size)
+        y: tensor of shape (N)
     Output:
         scalar loss tensor
     Args:
-        model (nn.Module): model which estimates diffusion noise
+        model (nn.Module): model which estimates diffusion noise
         img_size (tuple): image size tuple (H, W)
-        img_channels (int): number of image channels
+        img_channels (int): number of image channels
         betas (np.ndarray): numpy array of diffusion betas
         loss_type (string): loss type, "l1" or "l2"
         ema_decay (float): model weights exponential moving average decay
@@ -61,10 +61,11 @@ class GaussianDiffusion(nn.Module):
         self.num_timesteps = len(betas)
 
         alphas = 1.0 - betas
-        alphas_cumprod = np.cumprod(alphas)
+        alphas_cumprod = np.cumprod(alphas) # cumulative product of alphas
 
         to_torch = partial(torch.tensor, dtype=torch.float32)
 
+        # fixed buffers for training and inference, related to \alphas and \betas
         self.register_buffer("betas", to_torch(betas))
         self.register_buffer("alphas", to_torch(alphas))
         self.register_buffer("alphas_cumprod", to_torch(alphas_cumprod))
@@ -108,6 +109,7 @@ class GaussianDiffusion(nn.Module):
             t_batch = torch.tensor([t], device=device).repeat(batch_size)
             x = self.remove_noise(x, t_batch, y, use_ema)
 
+            # add variance if it is not the final step (t = 0 is the final step)
             if t > 0:
                 x += extract(self.sigma, t_batch, x.shape) * torch.randn_like(x)
         
@@ -151,6 +153,7 @@ class GaussianDiffusion(nn.Module):
 
         return loss
 
+    # forward function is for training DDPM
     def forward(self, x, y=None):
         b, c, h, w = x.shape
         device = x.device

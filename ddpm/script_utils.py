@@ -86,6 +86,7 @@ def get_diffusion_from_args(args):
         "silu": F.silu,
     }
 
+    # diffusion model UNet
     model = UNet(
         img_channels=3,
 
@@ -101,6 +102,10 @@ def get_diffusion_from_args(args):
         initial_pad=0,
     )
 
+    # define \beta_t list, \beta_1 < \beta_2 < \beta_3 < ····· < \beta_T
+    # num_timesteps: the overall time steps in the training of DDPM, default: 1000
+    # schedule_low: the overall time steps in the training of DDPM, default: 1e-4
+    # schedule_high: the overall time steps in the training of DDPM, default: 0.02
     if args.schedule == "cosine":
         betas = generate_cosine_schedule(args.num_timesteps)
     else:

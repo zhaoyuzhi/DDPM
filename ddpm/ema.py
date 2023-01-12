@@ -1,3 +1,6 @@
+# Exponential Moving Average (EMA)
+# applying a weighted average for historical model weights
+
 class EMA():
     def __init__(self, decay):
         self.decay = decay
